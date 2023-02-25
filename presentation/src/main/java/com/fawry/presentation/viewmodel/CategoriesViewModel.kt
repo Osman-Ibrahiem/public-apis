@@ -33,7 +33,7 @@ class CategoriesViewModel @Inject internal constructor(
     }
 
 
-    private fun getCategories() {
+    fun getCategories() {
         state = CategoriesState.Loading
         launchCoroutineIO {
             loadCategories()
