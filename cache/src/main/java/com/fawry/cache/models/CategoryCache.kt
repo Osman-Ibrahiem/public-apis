@@ -1,10 +1,10 @@
 package com.fawry.cache.models
 
-import com.google.gson.annotations.SerializedName
+import androidx.room.ColumnInfo
 
 data class CategoryCache(
-    @SerializedName("Category")
+    @ColumnInfo(name = "Category")
     var category: String? = null,
-    @SerializedName("count")
-    var count: Int? = null,
+    @ColumnInfo(name = "entries_count")
+    var entriesCount: Int? = null,
 )

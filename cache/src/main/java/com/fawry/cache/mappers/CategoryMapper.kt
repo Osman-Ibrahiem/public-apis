@@ -12,7 +12,7 @@ class CategoryMapper @Inject constructor(
     ): CategoryEntity {
         return CategoryEntity(
             category = type.category ?: "",
-            entriesCount = type.count ?: 0,
+            entriesCount = type.entriesCount ?: 0,
         )
     }
 
@@ -21,7 +21,7 @@ class CategoryMapper @Inject constructor(
     ): CategoryCache {
         return CategoryCache(
             category = type.category,
-            count = type.entriesCount,
+            entriesCount = type.entriesCount,
         )
     }
 }

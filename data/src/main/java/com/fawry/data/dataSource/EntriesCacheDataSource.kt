@@ -6,11 +6,14 @@ import kotlinx.coroutines.flow.Flow
 
 interface EntriesCacheDataSource {
 
-    suspend fun getAllEntries(): Flow<List<EntryEntity>>
+    suspend fun clearAllEntries()
+    suspend fun insertEntries(entries: List<EntryEntity>)
 
-    suspend fun getCategories(): Flow<List<CategoryEntity>>
+    suspend fun getAllEntries(): List<EntryEntity>
+
+    suspend fun getCategories(): List<CategoryEntity>
 
     suspend fun getEntriesByCategory(
         category: String
-    ): Flow<List<EntryEntity>>
+    ): List<EntryEntity>
 }

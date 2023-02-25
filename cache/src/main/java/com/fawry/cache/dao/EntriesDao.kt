@@ -6,11 +6,12 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.fawry.cache.models.CategoryCache
 import com.fawry.cache.models.EntryCache
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface EntriesDao {
 
-    @Query("SELECT Category, COUNT(*) FROM entries GROUP BY Category")
+    @Query("SELECT Category, COUNT(*) as entries_count FROM entries GROUP BY Category")
     fun getCategories(): List<CategoryCache>
 
     @Query("SELECT * FROM entries")
@@ -23,5 +24,5 @@ interface EntriesDao {
     fun clearEntries()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addEntries(vararg entries: EntryCache)
+    fun addEntries(entries: List<EntryCache>)
 }

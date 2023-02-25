@@ -1,6 +1,8 @@
 package com.fawry.data.repository
 
+import com.fawry.data.dataSource.EntriesCacheDataSource
 import com.fawry.data.dataSource.EntriesRemoteDataSource
+import com.fawry.data.mappers.CategoriesListMapper
 import com.fawry.data.mappers.EntriesListMapper
 import com.fawry.domain.models.Category
 import com.fawry.domain.models.Entry
@@ -10,33 +12,27 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class EntriesRepositoryImp @Inject constructor(
-    private val dataSource: EntriesRemoteDataSource,
+    private val remoteDataSource: EntriesRemoteDataSource,
+    private val cacheDataSource: EntriesCacheDataSource,
     private val entriesListMapper: EntriesListMapper,
+    private val categoriesListMapper: CategoriesListMapper,
 ) : EntriesRepository {
 
     override suspend fun getCategories(): Flow<List<Category>> = flow {
-        dataSource.getAllEntries().collect { entries ->
-            val categories = entriesListMapper
-                .mapFromEntity(entries)
-                .groupBy { it.category }
-                .map { category ->
-                    Category(
-                        category = category.key,
-                        entriesCount = category.value.size,
-                    )
-                }
-            emit(categories)
+        remoteDataSource.getAllEntries().collect { entries ->
+            cacheDataSource.clearAllEntries()
+            cacheDataSource.insertEntries(entries)
+            cacheDataSource.getCategories().let { categories ->
+                emit(categoriesListMapper.mapFromEntity(categories))
+            }
         }
     }
 
     override suspend fun getEntriesByCategory(
         category: String
     ): Flow<List<Entry>> = flow {
-        dataSource.getAllEntries().collect { entries ->
-            val categories = entriesListMapper
-                .mapFromEntity(entries)
-                .groupBy { it.category }
-            emit(categories[category] ?: emptyList())
+        cacheDataSource.getEntriesByCategory(category).let { entries ->
+            emit(entriesListMapper.mapFromEntity(entries))
         }
     }
 }

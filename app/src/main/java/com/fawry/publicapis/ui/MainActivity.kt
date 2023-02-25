@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity() {
         viewModel.stateObservable.observe(this) { categoriesState ->
             updateView(categoriesState)
         }
-//        viewModel.getCharacters()
     }
 
     private fun updateView(categoriesState: CategoriesState) {
