@@ -1,14 +1,15 @@
 package com.fawry.presentation.viewmodel
 
+import androidx.annotation.StringRes
 import com.fawry.domain.models.Category
 
-internal sealed class CategoriesState {
+sealed class CategoriesState {
 
     object Init : CategoriesState()
 
     object Loading : CategoriesState()
 
-    data class Error(var message: String) : CategoriesState()
+    data class Error(@StringRes var message: Int) : CategoriesState()
 
-    data class CharacterListSuccess(var listOfCategories: List<Category>) : CategoriesState()
+    data class Success(var categories: List<Category>) : CategoriesState()
 }

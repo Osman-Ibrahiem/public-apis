@@ -1,14 +1,15 @@
 package com.fawry.presentation.viewmodel
 
+import androidx.annotation.StringRes
 import com.fawry.domain.models.Entry
 
-internal sealed class EntriesState {
+sealed class EntriesState {
 
     object Init : EntriesState()
 
     object Loading : EntriesState()
 
-    data class Error(var message: String) : EntriesState()
+    data class Error(@StringRes var message: Int) : EntriesState()
 
-    data class CharacterListSuccess(var listOfEntries: List<Entry>) : EntriesState()
+    data class Success(var entries: List<Entry>) : EntriesState()
 }

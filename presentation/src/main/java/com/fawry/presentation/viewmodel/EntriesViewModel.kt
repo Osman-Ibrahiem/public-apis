@@ -1,10 +1,7 @@
 package com.fawry.presentation.viewmodel
 
-import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fawry.domain.interactor.GetEntriesByCategoryUseCase
-import com.fawry.domain.models.Entry
 import com.fawry.presentation.utils.ExceptionHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -14,15 +11,24 @@ import javax.inject.Inject
 @HiltViewModel
 class EntriesViewModel @Inject internal constructor(
     private val getEntriesByCategoryUseCase: GetEntriesByCategoryUseCase,
-) : BaseViewModel() {
+) : BaseViewModel<EntriesState>() {
+
+    private var state: EntriesState = EntriesState.Init
+        private set(value) {
+            field = value
+            publishState(value)
+        }
+
+    override val stateObservable: MutableLiveData<EntriesState> by lazy {
+        MutableLiveData<EntriesState>()
+    }
 
     private var getEntriesJob: Job? = null
-    private val _entriesList = MutableLiveData<List<Entry>>()
-    val entriesList: LiveData<List<Entry>> get() = _entriesList
 
     override val coroutineExceptionHandler: CoroutineExceptionHandler
         get() = CoroutineExceptionHandler { _, throwable ->
             val message = ExceptionHandler.parse(throwable)
+            state = EntriesState.Error(message)
         }
 
     override fun onCleared() {
@@ -31,15 +37,15 @@ class EntriesViewModel @Inject internal constructor(
     }
 
     private fun getEntries(category: String) {
+        state = EntriesState.Loading
         getEntriesJob = launchCoroutine {
             loadEntries(category)
         }
     }
 
     private suspend fun loadEntries(category: String) {
-        getEntriesByCategoryUseCase(category).collect {
-            Log.d("", it.toString())
-            _entriesList.value = it
+        getEntriesByCategoryUseCase(category).collect { entries ->
+            state = EntriesState.Success(entries)
         }
     }
 }
