@@ -7,7 +7,7 @@ ext {
     appVersionName = '1.0'
 
     // Core dependencies
-    kotlinVersion = '1.8.0'
+    kotlinVersion = '1.8.10'
     coreKtxVersion = '1.9.0'
     appCompatVersion = '1.6.1'
     materialVersion = '1.8.0'
@@ -35,11 +35,16 @@ ext {
 
     // Dagger - Hilt dependencies
     hiltAndroidVersion = '2.45'
-    hiltNavigationFragment = '1.0.0'
+    hiltNavigationFragment = '1.5.5'
     hiltVersion = '1.0.0-alpha02'
 
     // Timber logging dependencies
     timberVersion = '5.0.1'
+
+    // Network dependencies
+    okhttpVersion = '5.0.0-alpha.11'
+    retrofitVersion = '2.9.0'
+    gsonVersion = '2.10.1'
 
     // Common dependencies
     kotlinDependencies = [
@@ -75,6 +80,14 @@ ext {
             timber: "com.jakewharton.timber:timber:$timberVersion"
     ]
 
+    networkDependencies = [
+            retrofit         : "com.squareup.retrofit2:retrofit:$retrofitVersion",
+            retrofitConverter: "com.squareup.retrofit2:converter-gson:$retrofitVersion",
+//            okhttp           : "com.squareup.okhttp3:okhttp:$okhttpVersion",
+            okhttpInterceptor: "com.squareup.okhttp3:logging-interceptor:$okhttpVersion",
+            gson             : "com.google.code.gson:gson:$gsonVersion"
+    ]
+
     uiModuleDependencies = [
             coreKtx              : kotlinDependencies.coreKtx,
             appCompat            : "androidx.appcompat:appcompat:$appCompatVersion",
@@ -105,6 +118,12 @@ ext {
 
     presentationModuleDependencies = []
 
-    remoteModuleDependencies = []
+    remoteModuleDependencies = [
+            network: [networkDependencies.retrofit,
+                      networkDependencies.retrofitConverter,
+//                      networkDependencies.okhttp,
+                      networkDependencies.okhttpInterceptor,
+                      networkDependencies.gson],
+    ]
 
 }
