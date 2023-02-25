@@ -23,6 +23,18 @@
         <argument
             android:name="category"
             app:argType="string" />
+        <action
+            android:id="@+id/action_categoryEntriesFragment_to_phoneDialog"
+            app:destination="@id/phoneDialog" />
     </fragment>
+
+    <dialog
+        android:id="@+id/phoneDialog"
+        android:name="com.fawry.publicapis.ui.phone.PhoneDialog"
+        tools:layout="@layout/dialog_phone">
+        <argument
+            android:name="link"
+            app:argType="string" />
+    </dialog>
 
 </navigation>

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fawry.presentation.viewmodel.EntriesState
@@ -43,8 +44,12 @@ class CategoryEntriesFragment : Fragment() {
 
         setObservers()
         setupRecyclerView()
-        entriesAdapter.setItemClickListener { category ->
-
+        entriesAdapter.setItemClickListener { entry ->
+            findNavController().navigate(
+                CategoryEntriesFragmentDirections.actionCategoryEntriesFragmentToPhoneDialog(
+                    link = entry.link
+                )
+            )
         }
     }
 
