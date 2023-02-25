@@ -1,10 +1,9 @@
 package com.fawry.remote.di
 
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.fawry.remote.api.EntriesService
 import com.fawry.remote.di.qualifiers.AppBuildType
 import com.fawry.remote.di.qualifiers.AppRemoteUrl
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,12 +20,6 @@ import javax.inject.Singleton
 object ServiceFactory {
 
     private const val OK_HTTP_TIMEOUT = 60L
-
-    @Provides
-    @Singleton
-    fun provideEntriesService(
-        retrofit: Retrofit,
-    ): EntriesService = retrofit.create(EntriesService::class.java)
 
     @Provides
     @Singleton
