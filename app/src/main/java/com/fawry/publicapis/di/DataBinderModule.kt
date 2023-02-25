@@ -1,4 +1,4 @@
-package com.fawry.data.di
+package com.fawry.publicapis.di
 
 import com.fawry.data.repository.EntriesRepositoryImp
 import com.fawry.domain.repository.EntriesRepository

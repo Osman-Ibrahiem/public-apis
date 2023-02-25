@@ -1,7 +1,10 @@
 package com.fawry.presentation.viewmodel
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.fawry.domain.interactor.GetEntriesByCategoryUseCase
+import com.fawry.domain.models.Entry
 import com.fawry.presentation.utils.ExceptionHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -14,6 +17,8 @@ class EntriesViewModel @Inject internal constructor(
 ) : BaseViewModel() {
 
     private var getEntriesJob: Job? = null
+    private val _entriesList = MutableLiveData<List<Entry>>()
+    val entriesList: LiveData<List<Entry>> get() = _entriesList
 
     override val coroutineExceptionHandler: CoroutineExceptionHandler
         get() = CoroutineExceptionHandler { _, throwable ->
@@ -34,6 +39,7 @@ class EntriesViewModel @Inject internal constructor(
     private suspend fun loadEntries(category: String) {
         getEntriesByCategoryUseCase(category).collect {
             Log.d("", it.toString())
+            _entriesList.value = it
         }
     }
 }

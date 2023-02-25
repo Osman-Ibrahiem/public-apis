@@ -1,4 +1,4 @@
-package com.fawry.remote.di.qualifiers
+package com.fawry.publicapis.di.annotations.qualifiers
 
 import javax.inject.Qualifier
 

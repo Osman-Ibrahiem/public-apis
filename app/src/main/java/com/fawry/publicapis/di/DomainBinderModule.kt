@@ -1,4 +1,4 @@
-package com.fawry.domain.di
+package com.fawry.publicapis.di
 
 import dagger.Module
 import dagger.hilt.InstallIn

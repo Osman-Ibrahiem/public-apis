@@ -21,9 +21,13 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField "String", "BASE_URL", '"https://api.publicapis.org/"'
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "BASE_URL", '"https://api.publicapis.org/"'
         }
     }
     compileOptions {
@@ -56,13 +60,14 @@ dependencies {
     implementation uiModuleDependencies.ssp
     // Dagger-Hilt
     implementation uiModuleDependencies.daggerHilt
-    implementation 'androidx.core:core-ktx:+'
     kapt uiModuleDependencies.daggerHiltKapt
     // Coroutines
     implementation uiModuleDependencies.coroutines
     // Glide
     implementation uiModuleDependencies.glide
     kapt uiModuleDependencies.glideKapt
+    // Network (Retrofit, OkHttp Interceptor, Gson)
+    implementation uiModuleDependencies.network
     // Timber
     implementation uiModuleDependencies.timber
 }

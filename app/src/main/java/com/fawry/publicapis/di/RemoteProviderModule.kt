@@ -1,4 +1,4 @@
-package com.fawry.remote.di
+package com.fawry.publicapis.di
 
 import com.fawry.remote.api.EntriesService
 import dagger.Module
