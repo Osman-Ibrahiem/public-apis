@@ -47,6 +47,9 @@ ext {
     retrofitVersion = '2.9.0'
     gsonVersion = '2.10.1'
 
+    // Room
+    roomVersion = '2.5.0'
+
     // Common dependencies
     kotlinDependencies = [
             coreKtx: "androidx.core:core-ktx:$coreKtxVersion",
@@ -88,6 +91,12 @@ ext {
 //            okhttp           : "com.squareup.okhttp3:okhttp:$okhttpVersion",
             okhttpInterceptor: "com.squareup.okhttp3:logging-interceptor:$okhttpVersion",
             gson             : "com.google.code.gson:gson:$gsonVersion"
+    ]
+
+    roomDependencies = [
+            roomRuntime     : "androidx.room:room-runtime:$roomVersion",
+            roomCompilerKapt: "androidx.room:room-compiler:$roomVersion",
+            roomKtx         : "androidx.room:room-ktx:$roomVersion"
     ]
 
     uiModuleDependencies = [
@@ -147,4 +156,11 @@ ext {
             coroutine: coroutinesDependencies.coroutineCore,
     ]
 
+    cacheModuleDependencies = [
+            coreKtx : kotlinDependencies.coreKtx,
+            hiltCore: hiltDependencies.hiltCore,
+            room    : [roomDependencies.roomRuntime,
+                       roomDependencies.roomKtx],
+            roomKapt: roomDependencies.roomCompilerKapt,
+    ]
 }
