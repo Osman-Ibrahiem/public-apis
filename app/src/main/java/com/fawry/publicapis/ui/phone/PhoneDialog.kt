@@ -42,7 +42,7 @@ class PhoneDialog : DialogFragment() {
             }
 
             val phone = binding.inputText.text.toString()
-            if (!Regex("^01[0125][0-9]{8}\$\n").matches(phone)) {
+            if (!Regex("^01[0125][0-9]{8}\$").matches(phone)) {
                 binding.inputLayout.error = "Please enter a valid mobile number"
                 return@setOnClickListener
             }
@@ -54,7 +54,7 @@ class PhoneDialog : DialogFragment() {
 
     private fun shareToWhatsApp(phone: String) {
         val url =
-            "https://api.whatsapp.com/send?phone=${phone}&text=${args.link}"
+            "https://api.whatsapp.com/send?phone=+2${phone}&text=${args.link}"
 
         val intent = Intent(Intent.ACTION_VIEW).apply {
             this.data = Uri.parse(url)
