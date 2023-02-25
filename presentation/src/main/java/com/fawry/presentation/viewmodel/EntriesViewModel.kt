@@ -29,7 +29,7 @@ class EntriesViewModel @Inject internal constructor(
         }
 
 
-    private fun getEntries(category: String) {
+    fun getEntries(category: String) {
         state = EntriesState.Loading
         launchCoroutineIO {
             loadEntries(category)
